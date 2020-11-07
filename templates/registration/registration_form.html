@@ -1,0 +1,54 @@
+{% extends "user-reg/base.html" %} 
+{% block body_block %}
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table.center {
+  margin-left: auto; 
+  margin-right: auto;
+}
+</style>
+<body style="background-color:black;">
+<div class="w3-black w3-center" style="padding:200px 16px">
+<h2 class="w3-margin">Sign Up</h2>
+
+<form method="post" action=".">
+
+    {% csrf_token %}
+
+    <table class="center">
+
+        {% for field in form %}
+
+        <tr>
+            <td>
+                {{ field.label_tag }}
+            </td>
+
+            <td>
+                {{ field }}
+            </td>
+            <td>
+                {% if field.errors %}
+                    {{ field.errors }}
+                {% endif %}
+            </td>    
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <button class="button form_button" type="submit" value="Sign Up">Sign Up</button>
+
+</form>
+<a>Already A Member? </a>
+<br> 
+<a href="{% url 'auth_login' %}">Log In Here!</a> 
+</div>
+</body>
+
+{% endblock %}

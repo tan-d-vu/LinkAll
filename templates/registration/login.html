@@ -1,0 +1,47 @@
+{% extends "user-reg/base.html" %} 
+
+{% block body_block %}
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table.center {
+  margin-left: auto; 
+  margin-right: auto;
+}
+</style>
+<body style="background-color:black;">
+<div class="w3-center w3-black" style="padding:200px 16px">
+  <h2 class="w3-margin">Log In</h2>
+    <form method="post" action="." >
+        <form method="post" novalidate>
+
+            {% csrf_token %}
+
+            <table style="background-color: black;" class="center">
+                {% for field in form %}
+                <tr>
+                    <td>
+                        {{ field.errors }} {{ field.label_tag }}
+                    </td>
+                    <td>
+                        {{ field }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+             
+
+            <button class="button form_button" type="submit" value="Log In" />Log In</button>
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+    </form>
+
+        <a>Not A Member? </a>
+        <br>
+        <a href="{% url 'registration_register' %}">Sign Up Now!</a>
+</div>
+</body>
+{% endblock %}

@@ -1,0 +1,166 @@
+{% extends 'linktree/base.html' %}
+{% load static %}
+
+{% block body_block%}
+<body style="background-color:black;">
+    {% if user %}
+    <div style="padding:50px 16px">
+        {% if user.username == current_user.username %}
+            <h3 style="color: white">Current URLs: </h4>
+            {% for url in urls %}
+                <div class="button-center">
+
+                <button class="button button-title" style="background-color:white; color:black" 
+                        onclick="window.location.href='{{ url.url }}';">{{ url.title }}</button>
+                <button class="button button-title" style="background-color: red;width: 4%;" 
+                        onclick="window.location.href='{% url 'delete_url' user.username url.pk %}'">-</button>
+                </div>
+            {% endfor %}
+
+            <h3 style="color: white">Current Social Medias: </h3>
+            {% for social in socials %}
+                <a style="background-color:black; 
+                color:white; 
+                padding: 20px; 
+                font-size: 25px; 
+                width: 65px; 
+                height: 65px; 
+                text-align: center; 
+                text-decoration: none; 
+                margin: 5px 2px; 
+                border-radius: 50%;" 
+                href="{{ social.url }}" 
+                class="fa {{ social.name }}">
+                </a>
+                <button class="button button-title" style="background-color: red;width: 4%;" 
+                        onclick="window.location.href='{% url 'delete_social' user.username social.pk %}'">-</button>
+                <br>
+            {% endfor %}
+        {% else %}
+            <p>Not Your Profile!</p>
+        {% endif %}
+    {% endif %}
+    </div>
+{% endblock %}
+
+
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static "user/css/style.css" %}">
+    <script src="https://kit.fontawesome.com/03c7d53b02.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body, html {
+        height: 100%;
+        margin: 0;
+        }
+
+        #background {
+            background: url('{{current_profile.profile.background.url }}');
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 100%;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+
+
+<body id='background'>
+<p></p>
+<div>
+    <!-- Add white background to text. Maybe different fonts -->
+    <!-- Logo -->
+    {% if current_profile.profile.logo %}
+    <img class="avatar" src="{{current_profile.profile.logo.url }}" alt="logo">
+    {% endif %}
+    <!-- Display name -->
+    <h3 style="text-align:center;">{{ current_profile.profile.display_name }}</h3>
+    <p></p>
+    <!-- Bio -->
+    <p style="text-align:center;">{{ current_profile.profile.bio }}</p>
+    <p></p>
+</div>
+
+<!-- Display Links -->
+{% if urls %}
+{% for url in urls %}
+<div class="button-center">
+<button class="button button-title" style="vertical-align:middle" 
+        onclick="window.location.href='{{ url.url }}';"><span> {{ url.title }}  </span></button>
+<a href="{% url 'delete_url' user.username url.pk %}">Remove URL</a><string>|</strong>
+</div>
+{% endfor %}
+{% endif %}
+
+<!-- Update profile option -->
+<div class="button-center">
+{% if current_profile.username == user.username %}
+    <button class="button form_button" style="vertical-align:middle; border-color:black"
+        onclick="window.location.href='{% url 'profile_update' user.username %}';"><span> Update Profile<span></button>
+{% endif %}
+</div>
+<br>
+
+
+<!-- Social Media-->
+<div class="center" >
+{% if socials %}
+{% for social in socials %}
+<a style="background-color:black; 
+color:white; 
+padding: 20px; 
+font-size: 25px; 
+width: 65px; 
+height: 65px; 
+text-align: center; 
+text-decoration: none; 
+margin: 5px 2px; 
+border-radius: 50%;" 
+href="{{ social.url }}" 
+class="fa {{ social.name }}"></a>
+{% endfor %}
+{% endif %}
+</div>
+<!-- PLEASE don't ask me why for I do not know. -->
+<br>
+</body>
+
+
+<script>
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+{% if current_profile == None %}
+<body style="background-color:black;">
+<div class="w3-black w3-center" style="padding:200px 16px">
+  <h2>Profile Does Not Exist.</h2>
+  <a href="{% url 'index' %}" class="w3-bar-item w3-button w3-padding-large w3-white">Return to Homepage.</a>
+
+</div>
+</body>
+{% endif %}
+
+
+
+
+
+</html>

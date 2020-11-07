@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends 'user-reg/base.html' %}
+{% load static %}
+
+{% block body_block%}
+
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+
+<body style="background-color:black;">
+<!-- Header -->
+<header class="w3-container w3-black w3-center" style="padding:200px 16px">
+  <a class="w3-margin w3-jumbo">Welcome To LinkAll</a>
+  <p class="w3-xlarge">One Page to Link Them All</p>
+  <button class="w3-button w3-white w3-padding-large w3-large w3-margin-top"  
+  onclick="window.location.href='/accounts/register/'" >Get Started</button>
+</header>
+</body>
+
+{% endblock %}

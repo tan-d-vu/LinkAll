@@ -1,0 +1,40 @@
+{% extends 'user-reg/base.html' %}
+{% load static %}
+
+{% block body_block%}
+
+<body style="background-color:black;">
+<div class="w3-black w3-center" style="padding:200px 16px">
+  <h2>Update Profile</h2>
+    
+    {% if current_user.username == user.username %}
+        <form method="post" action="." enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="center">
+            {% for field in profile_form %}
+                {% if not field.is_hidden %}
+                           <tr>
+            <td>
+                {{ field.label_tag }}
+            </td>
+
+            <td>
+                {{ field }}
+            </td>
+            <td>
+                {% if field.errors %}
+                    {{ field.errors }}
+                {% endif %}
+            </td>    
+        </tr>
+                    
+                {% endif %}
+            {% endfor %}
+            </table>
+            <button type='submit' name='submit' value="Update Profile" class="button form_button">Update Profile</button>      
+        </form>
+    {% else %}
+    <a class="w3-margin">You are not permitted to edit this profile.</a>
+</body>
+    {% endif %}
+{% endblock %}

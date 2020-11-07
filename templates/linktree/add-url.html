@@ -1,0 +1,40 @@
+{% extends 'linktree/base.html' %}
+{% load static %}
+
+{% block body_block%}
+<style>
+
+</style>
+
+<body style="background-color:black;">
+    {% if current_user.username == user.username %}
+        <div class="w3-black w3-center" style="padding:200px 16px">
+            <h2>Add Link</h2>
+            <form id="page_form" method="post" action="{% url 'add_url' user.username %}">
+                {% csrf_token %}
+                <table class="center">
+                    {% for field in form %}
+                        {% if not field.is_hidden %}
+                        <tr>
+                            <td>
+                                {{ field.errors }}
+                                {{ field.label_tag }}
+                            </td>
+
+                            <td> 
+                                {{ field }}     
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+                <button class="button form_button" type='submit' name='submit' value="add url">Add Link</button>
+            </form>
+        </div>
+    {% else %}
+        <div class="w3-black w3-center" style="padding:200px 16px">
+            <h2> You can't add link to this profile. </h2>
+        </div>
+    {% endif %}
+
+{% endblock %}
