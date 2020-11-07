@@ -44,9 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'user_registration',
     'linktree',
+    'cloudinary',
 ]
 # Registration
 REGISTRATION_AUTO_LOGIN = True # Automatically log the user in.
@@ -149,3 +151,11 @@ MEDIA_URL = '/media/'
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
+# Cloud storage
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'hhcqclysc',
+    'API_KEY': '542735429876626',
+    'API_SECRET': 'yc73EaTMGN_SItLzZXhSY--Krxg',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
